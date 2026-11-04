@@ -194,7 +194,10 @@ fn spawnp_cmd_does_not_exist() {
 
 /// `posix_spawnattr_*` report errors through their return value, not errno.
 #[test]
-#[cfg(all(target_os = "linux", target_env = "gnu"))]
+#[cfg(any(
+    all(target_os = "linux", target_env = "gnu"),
+    target_os = "illumos"
+))]
 fn spawnattr_set_flags_invalid() {
     let mut attr = PosixSpawnAttr::init().unwrap();
     // 0x0400 is not a valid posix_spawn flag.
